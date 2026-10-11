@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>azma</title>
+<meta name="description" content="משחק עם חברים, מכתב תודה למי שעזר לך, ניקוד למשחק פאדל או הכנה לפרשת השבוע. לכל אחד מהם אפליקציה ואתר משלו.">
+<meta name="theme-color" content="#100C1A">
+<meta property="og:title" content="azma">
+<meta property="og:description" content="לערב עם חברים, לשולחן שבת, למילה טובה ולמגרש.">
+<meta property="og:url" content="https://azma.app/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23100C1A'/%3E%3Ctext x='32' y='44' font-family='Arial' font-size='34' font-weight='700' text-anchor='middle' fill='%23F2EEF8'%3Ea%3C/text%3E%3Ccircle cx='50' cy='42' r='4' fill='%23FF5468'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&amp;family=Assistant:wght@400;600;700;800&amp;family=Frank+Ruhl+Libre:wght@400;500;700;900&amp;family=Karantina:wght@400;700&amp;family=Noto+Rashi+Hebrew:wght@400;500&amp;family=Rubik+Glitch&amp;family=Rubik:wght@400;500;700;800&amp;display=swap">
+<style>
+
+a{color:inherit}a:hover{opacity:.85}
+.az-in{animation:azIn .7s cubic-bezier(.2,.7,.2,1) both}
+.az-fade{animation:azFade .9s ease both}
+.az-prog{animation:azProg 7s linear both}
+@keyframes azIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes azFade{from{opacity:0}to{opacity:1}}
+@keyframes azProg{from{width:0}to{width:100%}}
+button:focus-visible,a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.az-in,.az-fade{animation:none}.az-prog{display:none}}
+.az-slide{min-height:600px}
+@media (max-width:1040px){.az-slide{min-height:900px;align-content:start}.az-vis{min-height:280px !important}.az-faces{width:min(270px,100%) !important}}
+@media (max-width:480px){.az-slide{min-height:960px}.az-ring{transform:scale(.78);margin:-35px 0}}
+</style>
+<style>
+:root{--bg:#100C1A;--ink:#F2EEF8;--muted:#B9AFCC;--accent:#FF5468;--line:rgba(242,238,248,.16);--panel:rgba(255,255,255,.03);--radius:28px;--title:'Rubik Glitch','Rubik',system-ui,sans-serif;--body:'Rubik',system-ui,sans-serif;--dur:7s}
+html{scroll-behavior:smooth}
+body{margin:0;background-color:var(--bg);transition:background-color .8s ease}
+[hidden]{display:none !important}
+.az-c{display:contents}
+.paused .az-auto{display:none}
+.az-paused{display:none}
+.paused .az-paused{display:contents}
+.az-tab{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background-color:transparent;color:var(--ink);font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:background-color .3s ease,color .3s ease}
+.az-tab[aria-pressed="true"]{background-color:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<div dir="rtl" style="position: relative; overflow: hidden; background-color: var(--bg); color: var(--ink); font-family: var(--body); transition: background-color .8s ease, color .8s ease">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; z-index: 0; pointer-events: none">
+<span class="az-c" data-show="0">
+<div class="az-fade" style="position: absolute; inset: 0; background-image: radial-gradient(640px 460px at 22% 40%, rgba(255,84,104,.16), transparent 70%), radial-gradient(900px 640px at 85% 0%, rgba(124,92,255,.20), transparent 62%)"></div>
+</span>
+<span class="az-c" data-show="1" hidden>
+<div class="az-fade" style="position: absolute; inset: 0; background-image: radial-gradient(1200px 800px at 50% 30%, rgba(255,255,255,.5), transparent 70%), repeating-linear-gradient(0deg, rgba(43,31,20,.035) 0 1px, transparent 1px 36px)"></div>
+</span>
+<span class="az-c" data-show="2" hidden>
+<div class="az-fade" style="position: absolute; top: 0; left: 0; right: 0; height: 10px; background-image: repeating-linear-gradient(-45deg, #C23B2E 0 18px, #FBF2E2 18px 26px, #2F5DA8 26px 44px, #FBF2E2 44px 52px)"></div>
+<div class="az-fade" style="position: absolute; bottom: 0; left: 0; right: 0; height: 10px; background-image: repeating-linear-gradient(-45deg, #C23B2E 0 18px, #FBF2E2 18px 26px, #2F5DA8 26px 44px, #FBF2E2 44px 52px)"></div>
+</span>
+<span class="az-c" data-show="3" hidden>
+<div class="az-fade" style="position: absolute; top: 140px; bottom: 140px; left: -8%; right: -8%; border: 2px solid rgba(255,255,255,.07)"></div>
+<div class="az-fade" style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background-color: rgba(255,255,255,.06)"></div>
+</span>
+</div>
+
+<header style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 28px 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<a href="#top" dir="ltr" aria-label="azma – דף הבית" style="font-family: var(--title); font-size: 36px; line-height: 1; color: var(--ink); text-decoration: none">azma<span style="color: var(--accent)">.</span></a>
+<nav aria-label="ניווט ראשי" style="display: flex; gap: 8px; flex-wrap: wrap">
+<a href="#all" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--ink); font-size: 16px; font-weight: 600">כל האפליקציות</a>
+</nav>
+</header>
+
+<section id="top" style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 72px 24px 44px; display: flex; flex-direction: column; gap: 22px">
+<h1 style="margin: 0; font-size: clamp(44px, 7vw, 92px); line-height: 1.04; font-weight: 800; letter-spacing: -0.01em">
+<span class="az-c" data-show="0"><span class="az-in" style="display: inline-block; font-family: 'Rubik Glitch', 'Rubik', system-ui, sans-serif; font-weight: 400; color: #FF5468">לערב עם חברים</span></span>
+<span class="az-c" data-show="1" hidden><span class="az-in" style="display: inline-block; font-family: 'Frank Ruhl Libre', 'David', serif; font-weight: 900; color: #1E3A6E">לשולחן שבת</span></span>
+<span class="az-c" data-show="2" hidden><span class="az-in" style="display: inline-block; font-family: 'Amatic SC', 'Assistant', sans-serif; font-weight: 700; font-size: 1.25em; line-height: .9; color: #C23B2E">למילה טובה</span></span>
+<span class="az-c" data-show="3" hidden><span class="az-in" style="display: inline-block; font-family: 'Karantina', 'Rubik', sans-serif; font-weight: 700; font-size: 1.2em; line-height: .9; color: #DFFF4F">למגרש</span></span>
+</h1>
+<p style="margin: 0; max-width: 640px; font-size: 20px; line-height: 1.6; color: var(--muted); text-wrap: pretty">משחק עם חברים, מכתב תודה למי שעזר לך, ניקוד למשחק פאדל או הכנה לפרשת השבוע. לכל אחד מהם יש כאן אפליקציה ואתר משלו.</p>
+</section>
+
+<section aria-roledescription="קרוסלה" aria-label="האפליקציות של azma" style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px">
+<div id="stage" aria-live="off" style="position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background-color: var(--panel); transition: border-radius .6s ease, background-color .8s ease, border-color .8s ease">
+
+<span class="az-c" data-show="0">
+<div class="az-in az-slide" style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 40px; align-items: center; padding: clamp(28px, 5vw, 64px)">
+<span class="az-c az-auto"><div class="az-prog" aria-hidden="true" style="position: absolute; top: 0; right: 0; height: 3px; background-color: #FF5468; animation-duration: var(--dur)"></div></span>
+<div style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<div style="font-size: 14px; letter-spacing: .12em; font-weight: 500; color: #B9AFCC">01 · משחק קבוצתי</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-family: 'Rubik Glitch', 'Rubik', system-ui, sans-serif; font-weight: 400; font-size: clamp(64px, 10vw, 128px); line-height: .95; color: #F2EEF8">מתחזה</h2>
+<div dir="ltr" style="align-self: flex-start; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; color: #B9AFCC">Imposter</div>
+</div>
+<p style="margin: 0; font-size: 26px; font-weight: 700; line-height: 1.25; color: #FF5468">כולם יודעים את המילה. חוץ מאחד.</p>
+<p style="margin: 0; max-width: 46ch; font-size: 18px; line-height: 1.65; color: #B9AFCC">משחק חברתי לקבוצות: כל משתתף מקבל מילה סודית, ורק המתחזה נשאר בלי. סבב של רמזים, קצת חשדנות, והצבעה אחת שמכריעה מי בלף.</p>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px">
+<a href="https://imposter.azma.app" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; background-color: #FF5468; color: #16101F; font-size: 18px; font-weight: 700; text-decoration: none">לשחק עכשיו<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 15px; color: #B9AFCC">
+<span dir="ltr">imposter.azma.app</span>
+<span aria-hidden="true">·</span>
+<a href="https://mithaze.azma.app" dir="ltr" style="color: #F2EEF8">mithaze.azma.app</a>
+</div>
+</div>
+</div>
+<div class="az-vis" aria-hidden="true" style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 400px">
+<div class="az-faces" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(360px, 100%)">
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2E2346; box-shadow: 0 0 0 2px rgba(255,84,104,.4), 0 0 40px rgba(255,84,104,.25)"><div style="position: absolute; top: 40%; left: 18%; width: 14%; height: 14%; border-radius: 50%; background-color: #FF5468"></div><div style="position: absolute; top: 40%; left: 44%; width: 14%; height: 14%; border-radius: 50%; background-color: #FF5468"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+<div style="position: relative; aspect-ratio: 1; border-radius: 50%; background-color: #2A2140; box-shadow: none"><div style="position: absolute; top: 40%; left: 30%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div><div style="position: absolute; top: 40%; left: 56%; width: 14%; height: 14%; border-radius: 50%; background-color: #F2EEF8"></div></div>
+</div>
+<div style="position: absolute; bottom: 4px; left: 0; transform: rotate(-6deg); display: flex; flex-direction: column; gap: 4px; min-width: 170px; padding: 16px 20px; border-radius: 14px; background-color: #F2EEF8; color: #16101F; box-shadow: 0 18px 40px rgba(0,0,0,.45)">
+<span style="font-size: 12px; letter-spacing: .14em; color: #5B4F70">המילה שלך</span>
+<span style="font-size: 24px; font-weight: 800">אין מילה.</span>
+<span style="font-size: 14px; color: #5B4F70">רק ביטחון עצמי.</span>
+</div>
+</div>
+</div>
+</span>
+
+<span class="az-c" data-show="1" hidden>
+<div class="az-in az-slide" style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 40px; align-items: center; padding: clamp(28px, 5vw, 64px)">
+<span class="az-c az-auto"><div class="az-prog" aria-hidden="true" style="position: absolute; top: 0; right: 0; height: 3px; background-color: #A87A1E; animation-duration: var(--dur)"></div></span>
+<div style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<div style="font-size: 14px; letter-spacing: .12em; font-weight: 500; color: #6B5640">02 · לימוד שבועי</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-family: 'Frank Ruhl Libre', 'David', serif; font-weight: 900; font-size: clamp(56px, 8.5vw, 112px); line-height: 1; color: #2B1F14">פרשת השבוע</h2>
+<div dir="ltr" style="align-self: flex-start; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; color: #6B5640">Parasha</div>
+</div>
+<p style="margin: 0; font-size: 26px; font-weight: 700; line-height: 1.3; color: #1E3A6E">מה קוראים השבוע, במקום אחד.</p>
+<p style="margin: 0; max-width: 46ch; font-size: 19px; line-height: 1.7; color: #6B5640">דף שמתעדכן עם לוח השנה: הפרשה של השבוע, לקריאה לפני שבת או לשיחה סביב השולחן.</p>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px">
+<a href="https://parasha.azma.app" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 2px; background-color: #1E3A6E; color: #F7F1E6; font-size: 18px; font-weight: 700; text-decoration: none">לפרשת השבוע<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<span dir="ltr" style="font-size: 15px; color: #6B5640">parasha.azma.app</span>
+</div>
+</div>
+<div class="az-vis" aria-hidden="true" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; min-height: 400px">
+<div class="az-ring" style="position: relative; width: 320px; height: 320px; max-width: 100%">
+<div style="position: absolute; inset: 30px; border-radius: 50%; border: 1px solid rgba(43,31,20,.2)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 4px; height: 26px; margin-left: -2px; margin-top: -13px; border-radius: 2px; background-color: #A87A1E; transform: rotate(0.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(6.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(13.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(20.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(26.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(33.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(40.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(46.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(53.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(60.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(66.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(73.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(80.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(86.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(93.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(100.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(106.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(113.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(120.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(126.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(133.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(140.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(146.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(153.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(160.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(166.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(173.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(180.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(186.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(193.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(200.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(206.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(213.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(220.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(226.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(233.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(240.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(246.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(253.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(260.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(266.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(273.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(280.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(286.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(293.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(300.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(306.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(313.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(320.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(326.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(333.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(340.0000deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(346.6667deg) translateY(-148px)"></div>
+<div style="position: absolute; top: 50%; left: 50%; width: 2px; height: 12px; margin-left: -1px; margin-top: -6px; border-radius: 2px; background-color: rgba(43,31,20,.32); transform: rotate(353.3333deg) translateY(-148px)"></div>
+<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center">
+<span style="font-family: 'Frank Ruhl Libre', 'David', serif; font-size: 96px; font-weight: 900; line-height: 1; color: #1E3A6E">54</span>
+<span style="font-size: 17px; color: #6B5640">פרשות. מחזור אחד בשנה.</span>
+</div>
+</div>
+<div style="font-family: 'Noto Rashi Hebrew', 'Frank Ruhl Libre', serif; font-size: 22px; color: #7A6550">וַיְהִי עֶרֶב וַיְהִי בֹקֶר</div>
+</div>
+</div>
+</span>
+
+<span class="az-c" data-show="2" hidden>
+<div class="az-in az-slide" style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 40px; align-items: center; padding: clamp(28px, 5vw, 64px)">
+<span class="az-c az-auto"><div class="az-prog" aria-hidden="true" style="position: absolute; top: 0; right: 0; height: 3px; background-color: #C23B2E; animation-duration: var(--dur)"></div></span>
+<div style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<div style="font-size: 14px; letter-spacing: .12em; font-weight: 600; color: #76503F">03 · מילים טובות</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-family: 'Amatic SC', 'Assistant', sans-serif; font-weight: 700; font-size: clamp(72px, 11vw, 140px); line-height: .9; color: #3A1F1A">מכתבי תודה</h2>
+<div dir="ltr" style="align-self: flex-start; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; color: #76503F">todotoda</div>
+</div>
+<p style="margin: 0; font-size: 26px; font-weight: 700; line-height: 1.3; color: #C23B2E">לפעמים הכי קשה זה המשפט הראשון.</p>
+<p style="margin: 0; max-width: 46ch; font-size: 19px; line-height: 1.65; color: #76503F">אפליקציה שעוזרת לכתוב מכתב תודה לפקיד או לנציג שעזרו לך באמת: במשרד הפנים, בקופת חולים, ואפילו ברשות המסים או בביטוח לאומי.</p>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px">
+<a href="https://todotoda.azma.app" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 6px; background-color: #C23B2E; color: #FFFFFF; font-size: 18px; font-weight: 700; text-decoration: none">לכתוב מכתב<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<span dir="ltr" style="font-size: 15px; color: #76503F">todotoda.azma.app</span>
+</div>
+</div>
+<div class="az-vis" aria-hidden="true" style="position: relative; display: flex; align-items: center; justify-content: center; min-height: 430px">
+<div style="position: absolute; width: min(380px, 92%); aspect-ratio: 1.55; padding: 10px; box-sizing: border-box; transform: rotate(6deg) translate(-16px, 46px); border-radius: 6px; background-image: repeating-linear-gradient(-45deg, #C23B2E 0 16px, #FFFDF7 16px 24px, #2F5DA8 24px 40px, #FFFDF7 40px 48px); box-shadow: 0 20px 40px rgba(58,31,26,.18)">
+<div style="width: 100%; height: 100%; border-radius: 2px; background-color: #FFFDF7"></div>
+</div>
+<div style="position: relative; display: flex; flex-direction: column; width: min(340px, 86%); box-sizing: border-box; padding: 30px 30px 24px; transform: rotate(-4deg); border-radius: 4px; background-color: #FFFDF7; background-image: repeating-linear-gradient(180deg, transparent 0 41px, rgba(47,93,168,.2) 41px 42px); box-shadow: 0 24px 50px rgba(58,31,26,.22); font-family: 'Amatic SC', 'Assistant', sans-serif; font-weight: 700; color: #3A1F1A">
+<span style="font-size: 46px; line-height: 42px">תודה,</span>
+<span style="font-size: 32px; line-height: 42px">על הסבלנות</span>
+<span style="font-size: 32px; line-height: 42px">ועל הטיפול בבקשה.</span>
+<svg width="120" height="42" viewBox="0 0 120 42" fill="none" stroke="#C23B2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="align-self: flex-end; margin-top: 10px"><path d="M4 30c8-16 16-22 19-13s-7 15 1 9 11-15 16-8-3 12 6 6 10-11 14-5 4 7 13 1 12-7 20-6 12 2 20-2"></path></svg>
+<div style="position: absolute; top: 18px; left: 18px; width: 56px; height: 66px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px dashed #C23B2E; border-radius: 4px; color: #C23B2E">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
+</div>
+</div>
+</div>
+</div>
+</span>
+
+<span class="az-c" data-show="3" hidden>
+<div class="az-in az-slide" style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 40px; align-items: center; padding: clamp(28px, 5vw, 64px)">
+<span class="az-c az-auto"><div class="az-prog" aria-hidden="true" style="position: absolute; top: 0; right: 0; height: 3px; background-color: #DFFF4F; animation-duration: var(--dur)"></div></span>
+<div style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<div style="font-size: 14px; letter-spacing: .12em; font-weight: 500; color: #C9D6FF">04 · ספורט קבוצתי</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-family: 'Karantina', 'Rubik', sans-serif; font-weight: 700; font-size: clamp(88px, 13vw, 168px); line-height: .85; color: #FFFFFF">פאדל</h2>
+<div dir="ltr" style="align-self: flex-start; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; color: #C9D6FF">Padel</div>
+</div>
+<p style="margin: 0; font-size: 26px; font-weight: 700; line-height: 1.3; color: #DFFF4F">סוף לוויכוחים על התוצאה.</p>
+<p style="margin: 0; max-width: 46ch; font-size: 18px; line-height: 1.65; color: #C9D6FF">ניקוד משחקי פאדל לקבוצה קבועה: מי שיחק עם מי, מי ניצח, ומי מוביל בטבלה.</p>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px">
+<a href="https://padel.azma.app" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 4px; background-color: #DFFF4F; color: #0D1F5C; font-size: 18px; font-weight: 700; text-decoration: none">ללוח התוצאות<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<span dir="ltr" style="font-size: 15px; color: #C9D6FF">padel.azma.app</span>
+</div>
+</div>
+<div class="az-vis" aria-hidden="true" style="display: flex; flex-direction: column; justify-content: center; min-height: 400px">
+<div style="position: relative; width: 100%; aspect-ratio: 2 / 1; box-sizing: border-box; border: 3px solid #FFFFFF; border-radius: 4px; background-color: #2350CF; box-shadow: inset 0 0 0 12px rgba(255,255,255,.06)">
+<div style="position: absolute; top: -10px; bottom: -10px; left: 50%; width: 4px; margin-left: -2px; background-image: repeating-linear-gradient(180deg, #FFFFFF 0 6px, rgba(255,255,255,.35) 6px 10px)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 15%; width: 2px; background-color: #FFFFFF"></div>
+<div style="position: absolute; top: 0; bottom: 0; right: 15%; width: 2px; background-color: #FFFFFF"></div>
+<div style="position: absolute; top: 50%; left: 15%; right: 15%; height: 2px; margin-top: -1px; background-color: #FFFFFF"></div>
+<div style="position: absolute; top: 26%; left: 63%; width: 34px; height: 34px; overflow: hidden; border-radius: 50%; background-color: #DFFF4F; box-shadow: 0 10px 20px rgba(0,0,0,.3)">
+<div style="position: absolute; top: -45%; left: -55%; width: 100%; height: 100%; box-sizing: border-box; border-radius: 50%; border: 2px solid rgba(255,255,255,.9)"></div>
+</div>
+</div>
+<div style="position: relative; align-self: flex-start; margin-top: -56px; margin-inline-start: 24px; display: grid; grid-template-columns: repeat(4, auto); gap: 8px 22px; align-items: center; padding: 14px 20px; border-radius: 6px; background-color: #0D1F5C; box-shadow: 0 18px 40px rgba(0,0,0,.3)">
+<span style="font-size: 15px; font-weight: 500; color: #C9D6FF">זוג א׳</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #FFFFFF">6</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #FFFFFF">4</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #DFFF4F">40</span>
+<span style="font-size: 15px; font-weight: 500; color: #C9D6FF">זוג ב׳</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #FFFFFF">4</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #FFFFFF">6</span>
+<span style="font-family: 'Karantina', 'Rubik', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #C9D6FF">30</span>
+</div>
+</div>
+</div>
+</span>
+
+</div>
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 20px">
+<div role="group" aria-label="בחירת אפליקציה" style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" class="az-tab" data-go="0" aria-pressed="true">מתחזה</button>
+<button type="button" class="az-tab" data-go="1" aria-pressed="false">פרשת השבוע</button>
+<button type="button" class="az-tab" data-go="2" aria-pressed="false">מכתבי תודה</button>
+<button type="button" class="az-tab" data-go="3" aria-pressed="false">פאדל</button>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span dir="ltr" style="min-width: 64px; text-align: center; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted)" id="counter">01 / 04</span>
+<button type="button" id="prev" aria-label="האפליקציה הקודמת" style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background-color: transparent; color: var(--ink); cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+<button type="button" id="next" aria-label="האפליקציה הבאה" style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background-color: transparent; color: var(--ink); cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button type="button" id="toggle" aria-label="השהיית הסיבוב האוטומטי" style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background-color: transparent; color: var(--ink); cursor: pointer">
+<span class="az-c az-auto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14"></path><path d="M15 5v14"></path></svg></span>
+<span class="az-c az-paused"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"></path></svg></span>
+</button>
+</div>
+</div>
+</section>
+
+<section id="all" style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 104px 24px 32px">
+<h2 style="margin: 0 0 20px; font-size: 15px; letter-spacing: .14em; font-weight: 600; color: var(--muted)">כל האפליקציות</h2>
+<div style="display: flex; flex-direction: column; border-top: 1px solid var(--line)">
+<a href="https://imposter.azma.app" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 24px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none">
+<span style="width: 40px; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted)">01</span>
+<span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: clamp(26px, 3vw, 34px); font-weight: 700">מתחזה</span><span style="font-size: 16px; color: var(--muted)">משחק חברתי לקבוצות</span></span>
+<span dir="ltr" style="display: flex; flex-direction: column; gap: 2px; font-size: 15px; color: var(--muted)"><span>imposter.azma.app</span><span>mithaze.azma.app</span></span>
+</a>
+<a href="https://parasha.azma.app" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 24px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none">
+<span style="width: 40px; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted)">02</span>
+<span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: clamp(26px, 3vw, 34px); font-weight: 700">פרשת השבוע</span><span style="font-size: 16px; color: var(--muted)">הפרשה של השבוע, במקום אחד</span></span>
+<span dir="ltr" style="font-size: 15px; color: var(--muted)">parasha.azma.app</span>
+</a>
+<a href="https://todotoda.azma.app" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 24px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none">
+<span style="width: 40px; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted)">03</span>
+<span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: clamp(26px, 3vw, 34px); font-weight: 700">מכתבי תודה</span><span style="font-size: 16px; color: var(--muted)">לכתוב תודה אישית, בלי להיתקע במשפט הראשון</span></span>
+<span dir="ltr" style="font-size: 15px; color: var(--muted)">todotoda.azma.app</span>
+</a>
+<a href="https://padel.azma.app" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 24px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none">
+<span style="width: 40px; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted)">04</span>
+<span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: clamp(26px, 3vw, 34px); font-weight: 700">פאדל</span><span style="font-size: 16px; color: var(--muted)">ניקוד משחקים לקבוצה קבועה</span></span>
+<span dir="ltr" style="font-size: 15px; color: var(--muted)">padel.azma.app</span>
+</a>
+</div>
+</section>
+
+<footer style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 40px 24px 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 15px; color: var(--muted)">
+<span dir="ltr" style="font-family: var(--title); font-size: 26px; line-height: 1; color: var(--ink)">azma<span style="color: var(--accent)">.</span>app</span>
+<span dir="ltr">© 2026</span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var THEMES=[
+    {bg:'#100C1A',ink:'#F2EEF8',muted:'#B9AFCC',accent:'#FF5468',line:'rgba(242,238,248,.16)',panel:'rgba(255,255,255,.03)',radius:'28px',title:"'Rubik Glitch','Rubik',system-ui,sans-serif",body:"'Rubik',system-ui,sans-serif",meta:'#100C1A'},
+    {bg:'#F2EADB',ink:'#2B1F14',muted:'#6B5640',accent:'#1E3A6E',line:'rgba(43,31,20,.18)',panel:'rgba(255,255,255,.35)',radius:'2px',title:"'Frank Ruhl Libre','David',serif",body:"'Frank Ruhl Libre','David',serif",meta:'#F2EADB'},
+    {bg:'#FBF2E2',ink:'#3A1F1A',muted:'#76503F',accent:'#C23B2E',line:'rgba(58,31,26,.16)',panel:'rgba(255,255,255,.55)',radius:'10px',title:"'Amatic SC','Assistant',sans-serif",body:"'Assistant',system-ui,sans-serif",meta:'#FBF2E2'},
+    {bg:'#1B3DA6',ink:'#FFFFFF',muted:'#C9D6FF',accent:'#DFFF4F',line:'rgba(255,255,255,.24)',panel:'rgba(13,31,92,.35)',radius:'6px',title:"'Karantina','Rubik',sans-serif",body:"'Rubik',system-ui,sans-serif",meta:'#1B3DA6'}
+  ];
+  var SECS=7, i=0, auto=true, timer=null, x0=null;
+  var root=document.documentElement, meta=document.querySelector('meta[name="theme-color"]');
+  try{ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) auto=false; }catch(e){}
+  root.style.setProperty('--dur', SECS+'s');
+  function apply(){
+    var t=THEMES[i];
+    ['bg','ink','muted','accent','line','panel','radius','title','body'].forEach(function(k){ root.style.setProperty('--'+k, t[k]); });
+    if(meta) meta.setAttribute('content', t.meta);
+    document.querySelectorAll('[data-show]').forEach(function(el){ el.hidden = (+el.getAttribute('data-show') !== i); });
+    document.querySelectorAll('[data-go]').forEach(function(b){ b.setAttribute('aria-pressed', (+b.getAttribute('data-go') === i) ? 'true' : 'false'); });
+    document.getElementById('counter').textContent = '0'+(i+1)+' / 04';
+    root.classList.toggle('paused', !auto);
+    document.getElementById('toggle').setAttribute('aria-label', auto ? 'השהיית הסיבוב האוטומטי' : 'הפעלת הסיבוב האוטומטי');
+    document.getElementById('stage').setAttribute('aria-live', auto ? 'off' : 'polite');
+  }
+  function restart(){ clearInterval(timer); timer=setInterval(function(){ if(auto){ i=(i+1)%4; apply(); } }, SECS*1000); }
+  function go(n){ i=((n%4)+4)%4; apply(); restart(); }
+  document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click', function(){ go(+b.getAttribute('data-go')); }); });
+  document.getElementById('prev').addEventListener('click', function(){ go(i-1); });
+  document.getElementById('next').addEventListener('click', function(){ go(i+1); });
+  document.getElementById('toggle').addEventListener('click', function(){ auto=!auto; apply(); restart(); });
+  var stage=document.getElementById('stage');
+  stage.addEventListener('touchstart', function(e){ x0 = e.touches[0] ? e.touches[0].clientX : null; }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    var t=e.changedTouches[0]; if(x0===null || !t) return;
+    var dx=t.clientX-x0; x0=null; if(Math.abs(dx)<40) return; go(i + (dx>0 ? 1 : -1));
+  });
+  apply(); restart();
+})();
+</script>
+</body>
+</html>
